@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donner un Avis - La Socketterie</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #3498db;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #3498db;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+        .comment-list {
+            margin-top: 30px;
+        }
+        .comment {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment strong {
+            font-size: 1.2em;
+        }
+        .comment p {
+            font-size: 1em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>La Socketterie - Laissez Votre Avis</h1>
+        <p>Vos retours sont précieux pour nous améliorer !</p>
+    </header>
+
+    <div class="container">
+
+        <div class="form-container">
+            <h2>Écrire un Commentaire</h2>
+            <form id="commentForm">
+                <div>
+                    <label for="username">Nom :</label>
+                    <input type="text" id="username" name="username" required placeholder="Votre nom">
+                </div>
+                <div>
+                    <label for="comment">Commentaire :</label>
+                    <textarea id="comment" name="comment" required placeholder="Votre commentaire ici..."></textarea>
+                </div>
+                <button type="submit">Soumettre le Commentaire</button>
+            </form>
+            <p class="error-message" id="error-message">Tous les champs doivent être remplis.</p>
+        </div>
+
+        <div class="comment-list" id="commentList">
+            <h2>Commentaires récents :</h2>
+            <!-- Les commentaires seront ajoutés ici dynamiquement -->
+        </div>
+
+    </div>
+
+    <script>
+        // Récupérer les éléments HTML
+        const form = document.getElementById("commentForm");
+        const usernameInput = document.getElementById("username");
+        const commentInput = document.getElementById("comment");
+        const commentList = document.getElementById("commentList");
+        const errorMessage = document.getElementById("error-message");
+
+        // Ajouter un événement de soumission du formulaire
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêcher la soumission du formulaire et le rechargement de la page
+
+            // Vérifier si les champs sont remplis
+            if (usernameInput.value.trim() === "" || commentInput.value.trim() === "") {
+                errorMessage.style.display = "block"; // Afficher le message d'erreur
+                return; // Arrêter la fonction si un champ est vide
+            } else {
+                errorMessage.style.display = "none"; // Cacher le message d'erreur si tout est bon
+            }
+
+            // Créer un nouvel élément de commentaire
+            const newComment = document.createElement("div");
+            newComment.classList.add("comment");
+
+            // Ajouter le nom et le commentaire
+            newComment.innerHTML = `<strong>${usernameInput.value}</strong><p>${commentInput.value}</p>`;
+
+            // Ajouter le commentaire à la liste
+            commentList.appendChild(newComment);
+
+            // Vider les champs du formulaire après l'ajout
+            usernameInput.value = "";
+            commentInput.value = "";
+        });
+    </script>
+
+</body>
+</html>
